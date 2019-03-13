@@ -12,7 +12,13 @@ public class Process extends Thread{
 	@Override
 	public void start() {
 		while(!false) {//good programing practices: never user while true
-			
+			request();
+			try {
+				Thread.sleep(25000);
+			} catch (InterruptedException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 		}
 	}
 	

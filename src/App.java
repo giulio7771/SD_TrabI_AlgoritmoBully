@@ -11,7 +11,10 @@ public class App {
 	public static Process master;
 	
 	public static void main(String[] args) {
-		
+		Generator generator = new Generator();
+		ProcessKiller killer = new ProcessKiller();
+		generator.start();
+		killer.start();
 		
 	}
 	
