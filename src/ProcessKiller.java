@@ -2,23 +2,23 @@
 import java.util.Random;
 
 public class ProcessKiller extends Thread {
+    // This class kills a random process every 80 seconds
 
     @Override
-    public void start() {
+    public void run() {
         while (true) {
             try {
                 Thread.sleep(80000);
             } catch (InterruptedException e) {
-                // TODO Auto-generated catch block
                 e.printStackTrace();
             }
+
             Random r = new Random();
-            long sequence = r.nextInt(App.processes.size()) + 1;
+            long sequence = r.nextInt(App.processes.size());
             Process process = App.processes.get((int) sequence);
-            if (process == App.master) {
-                App.master = null;
-            }
-            App.processes.remove(process);
+            boolean isMaster = process == App.master;
+            App.kill(process);
+            System.out.println("The process #" + process.id + " was terminated" + (isMaster ? " and it was the master." : "."));
         }
     }
 }

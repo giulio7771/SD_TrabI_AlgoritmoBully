@@ -1,13 +1,13 @@
 
-public class Generator extends Thread {
-//This class generates the processes
+public class ProcessGenerator extends Thread {
+//This class generates a new process every 30 seconds
 
     @Override
-    public void start() {
+    public void run() {
         while (true) {
             Process p = new Process();
             App.processes.add(p);
-            p.start();
+            System.out.println("New process started (#" + p.id + ").");
             try {
                 Thread.sleep(30000);
             } catch (InterruptedException e) {
