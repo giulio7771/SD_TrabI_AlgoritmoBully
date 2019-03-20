@@ -1,5 +1,5 @@
 
-public class MasterKiller extends Thread {
+public class CordinatorKiller extends Thread {
     // This class kills a random process every 80 seconds
 
     @Override
@@ -10,10 +10,10 @@ public class MasterKiller extends Thread {
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
-            if (App.master != null) {
-                System.out.println("The master died (#" + App.master.id + ").");
+            if (App.cordinator != null) {
+                System.out.println("The cordinator died (#" + App.cordinator.id + ").");
             }
-            App.kill(App.master);
+            App.kill(App.cordinator);
         }
     }
 }

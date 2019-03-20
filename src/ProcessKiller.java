@@ -16,9 +16,9 @@ public class ProcessKiller extends Thread {
             Random r = new Random();
             long sequence = r.nextInt(App.processes.size());
             Process process = App.processes.get((int) sequence);
-            boolean isMaster = process == App.master;
+            boolean isMaster = process == App.cordinator;
             App.kill(process);
-            System.out.println("The process #" + process.id + " was terminated" + (isMaster ? " and it was the master." : "."));
+            System.out.println("The process #" + process.id + " was terminated" + (isMaster ? " and it was the cordinator." : "."));
         }
     }
 }
