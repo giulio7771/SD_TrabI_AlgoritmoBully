@@ -11,7 +11,7 @@ public class App {
     public static List<Process> processes = new LinkedList<>();
     public static Deque<Long> availableIds = new ArrayDeque<>();
     public static long nextId = (long) 1;
-    public static Process cordinator;
+    public static Process coordinator;
     public static boolean electionGoingOn = false;
 
     public static void main(String[] args) {
@@ -21,11 +21,11 @@ public class App {
         ProcessGenerator generator = new ProcessGenerator();
         ProcessKiller killer = new ProcessKiller();
         RequestMaker requestMaker = new RequestMaker();
-        CordinatorKiller cordinatorKiller = new CordinatorKiller();
+        CordinatorKiller coordinatorKiller = new CordinatorKiller();
         generator.start();
         killer.start();
         requestMaker.start();
-        cordinatorKiller.start();
+        coordinatorKiller.start();
 
         System.out.println("Threads started...");
         System.out.println("Showing simulation status...");
@@ -41,7 +41,7 @@ public class App {
 
             System.out.println("Processes: " + processes.size());
             System.out.println("Processes: [" + processesList + "]");
-            System.out.println("Master: " + (App.cordinator == null ? "null" : App.cordinator.id));
+            System.out.println("Master: " + (App.coordinator == null ? "null" : App.coordinator.id));
 
             try {
                 Thread.sleep(5000);
@@ -64,23 +64,23 @@ public class App {
             }
         }
         electionGoingOn = false;
-        cordinator = requester;
+        coordinator = requester;
     }
 
     public static void request(Process requester) {
-        if (App.cordinator == null && !App.electionGoingOn) {
+        if (App.coordinator == null && !App.electionGoingOn) {
             App.election(requester);
-            System.out.print("Process #" + requester.id + " started an election and #" + App.cordinator.id + " won.");
+            System.out.print("Process #" + requester.id + " started an election and #" + App.coordinator.id + " won.");
 
         } else {
-            System.out.println("The process #" + requester.id + " made a succesful request to the cordinator (#" + App.cordinator.id + ").");
+            System.out.println("The process #" + requester.id + " made a succesful request to the coordinator (#" + App.coordinator.id + ").");
         }
     }
 
     public static void kill(Process process) {
         if (process != null) {
-            if (cordinator == process) {
-                cordinator = null;
+            if (coordinator == process) {
+                coordinator = null;
             }
             availableIds.push(process.id);
             processes.remove(process);

@@ -10,10 +10,10 @@ public class CordinatorKiller extends Thread {
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
-            if (App.cordinator != null) {
-                System.out.println("The cordinator died (#" + App.cordinator.id + ").");
+            if (App.coordinator != null) {
+                System.out.println("The coordinator died (#" + App.coordinator.id + ").");
             }
-            App.kill(App.cordinator);
+            App.kill(App.coordinator);
         }
     }
 }
