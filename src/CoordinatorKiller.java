@@ -1,5 +1,5 @@
 
-public class CordinatorKiller extends Thread {
+public class CoordinatorKiller extends Thread {
     // This class kills a random process every 80 seconds
 
     @Override

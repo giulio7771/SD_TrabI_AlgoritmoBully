@@ -21,7 +21,7 @@ public class App {
         ProcessGenerator generator = new ProcessGenerator();
         ProcessKiller killer = new ProcessKiller();
         RequestMaker requestMaker = new RequestMaker();
-        CordinatorKiller coordinatorKiller = new CordinatorKiller();
+        CoordinatorKiller coordinatorKiller = new CoordinatorKiller();
         generator.start();
         killer.start();
         requestMaker.start();
