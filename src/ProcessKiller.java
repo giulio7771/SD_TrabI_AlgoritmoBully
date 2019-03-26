@@ -12,13 +12,18 @@ public class ProcessKiller extends Thread {
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
-
-            Random r = new Random();
-            long sequence = r.nextInt(App.processes.size());
-            Process process = App.processes.get((int) sequence);
-            boolean isMaster = process == App.coordinator;
-            App.kill(process);
-            System.out.println("The process #" + process.id + " was terminated" + (isMaster ? " and it was the coordinator." : "."));
+            App.processesLock.lock();
+            try {
+                Random r = new Random();
+                long sequence = r.nextInt(App.processes.size());
+                Process process = App.processes.get((int) sequence);
+                boolean isMaster = process == App.coordinator;
+                App.kill(process);
+                System.out.println("The process #" + process.id + " was terminated" + (isMaster ? " and it was the coordinator." : "."));
+            } finally {
+                App.processesLock.unlock();
+            }
         }
+        
     }
 }

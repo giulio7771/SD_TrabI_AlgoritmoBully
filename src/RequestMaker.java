@@ -6,11 +6,17 @@ public class RequestMaker extends Thread {
 
     @Override
     public void run() {
-        while (!false) {//good programing practices: never user while true
-            Random random = new Random();
-            long sequence = random.nextInt(App.processes.size());
-            Process requester = App.processes.get((int) sequence);
-            App.request(requester);
+        while (!false) {
+            App.processesLock.lock();
+            try {
+                //good programing practices: never use while true
+                Random random = new Random();
+                long sequence = random.nextInt(App.processes.size());
+                Process requester = App.processes.get((int) sequence);
+                App.request(requester);
+            } finally {
+                App.processesLock.unlock();
+            }
             try {
                 Thread.sleep(25000);
             } catch (InterruptedException e) {
