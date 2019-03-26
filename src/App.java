@@ -64,6 +64,8 @@ public class App {
         for (Process process : processes) {
             if (process != requester) {
                 if (process.id > requester.id) {
+                	System.out.println("#"+requester.id+" calls election for #"+process.id);
+                	System.out.println("#"+process.id+":"+"Ok");
                     election(process);
                     return;
                 }
