@@ -3,11 +3,17 @@ import java.util.ArrayDeque;
 import java.util.Deque;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.concurrent.locks.Lock;
+import java.util.concurrent.locks.ReentrantLock;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
 public class App {
 
+    public static final Lock processesLock = new ReentrantLock();
+    public static final Lock availableIdsLock = new ReentrantLock();
+    public static final Lock nextIdLock = new ReentrantLock();
+    
     public static List<Process> processes = new LinkedList<>();
     public static Deque<Long> availableIds = new ArrayDeque<>();
     public static long nextId = (long) 1;
@@ -82,7 +88,12 @@ public class App {
             if (coordinator == process) {
                 coordinator = null;
             }
-            availableIds.push(process.id);
+            App.availableIdsLock.lock();
+            try{
+                availableIds.push(process.id);
+            }finally{
+                App.availableIdsLock.unlock();
+            }
             processes.remove(process);
         }
     }

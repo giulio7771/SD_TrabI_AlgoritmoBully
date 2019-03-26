@@ -5,9 +5,14 @@ public class ProcessGenerator extends Thread {
     @Override
     public void run() {
         while (true) {
-            Process p = new Process();
-            App.processes.add(p);
-            System.out.println("New process started (#" + p.id + ").");
+            App.processesLock.lock();
+            try {
+                Process p = new Process();
+                App.processes.add(p);
+                System.out.println("New process started (#" + p.id + ").");
+            } finally {
+                App.processesLock.unlock();
+            }
             try {
                 Thread.sleep(30000);
             } catch (InterruptedException e) {

@@ -4,10 +4,20 @@ public class Process {
     public long id;
 
     public Process() {
-        if (!App.availableIds.isEmpty()) {
-            id = App.availableIds.pop();
-        } else {
-            id = App.nextId++;
+        App.availableIdsLock.lock();
+        try {
+            if (!App.availableIds.isEmpty()) {
+                id = App.availableIds.pop();
+            } else {
+                App.nextIdLock.lock();
+                try {
+                    id = App.nextId++;
+                } finally {
+                    App.nextIdLock.unlock();
+                }
+            }
+        } finally {
+            App.availableIdsLock.unlock();
         }
     }
 }
