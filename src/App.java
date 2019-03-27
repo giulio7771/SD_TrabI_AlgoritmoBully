@@ -81,6 +81,7 @@ public class App {
             System.out.print("Process #" + requester.id + " started an election and #" + App.coordinator.id + " won.");
 
         } else {
+            while(App.electionGoingOn);
             System.out.println("The process #" + requester.id + " made a succesful request to the coordinator (#" + App.coordinator.id + ").");
         }
     }
